@@ -1,0 +1,163 @@
+@baseUrl = http://localhost:3000/api/v1
+@authToken = YOUR_AUTH_TOKEN_HERE
+
+### User Routes
+
+# Register a new user
+POST {{baseUrl}}/users/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "role": "CHILD"
+}
+
+# Login
+POST {{baseUrl}}/users/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+# Get user profile
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{authToken}}
+
+# Update user profile
+PUT {{baseUrl}}/users/profile
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "avatar": "https://example.com/avatar.jpg",
+  "bio": "I love learning!",
+  "favoriteThings": "Math, Science, Reading"
+}
+
+### Lesson Routes
+
+# Get all lessons
+GET {{baseUrl}}/lessons
+
+# Get lesson by ID
+GET {{baseUrl}}/lessons/lesson_id_here
+
+# Create lesson (admin only)
+POST {{baseUrl}}/lessons
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "New Lesson",
+  "description": "This is a new lesson",
+  "videoUrl": "https://example.com/lesson-video.mp4"
+}
+
+# Update lesson (admin only)
+PUT {{baseUrl}}/lessons/lesson_id_here
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "Updated Lesson Title",
+  "description": "Updated lesson description"
+}
+
+# Delete lesson (admin only)
+DELETE {{baseUrl}}/lessons/lesson_id_here
+Authorization: Bearer {{authToken}}
+
+### Game Routes
+
+# Get all games
+GET {{baseUrl}}/games
+
+# Get game by ID
+GET {{baseUrl}}/games/game_id_here
+
+# Create game (admin only)
+POST {{baseUrl}}/games
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "New Game",
+  "description": "This is a new game",
+  "gameUrl": "https://example.com/game"
+}
+
+# Update game (admin only)
+PUT {{baseUrl}}/games/game_id_here
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "Updated Game Title",
+  "description": "Updated game description"
+}
+
+# Delete game (admin only)
+DELETE {{baseUrl}}/games/game_id_here
+Authorization: Bearer {{authToken}}
+
+### Group Routes
+
+# Get all groups
+GET {{baseUrl}}/groups
+
+# Get group by ID
+GET {{baseUrl}}/groups/group_id_here
+
+# Create group (admin only)
+POST {{baseUrl}}/groups
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "New Group",
+  "description": "This is a new group"
+}
+
+# Update group (admin only)
+PUT {{baseUrl}}/groups/group_id_here
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "Updated Group Name",
+  "description": "Updated group description"
+}
+
+# Delete group (admin only)
+DELETE {{baseUrl}}/groups/group_id_here
+Authorization: Bearer {{authToken}}
+
+### Payment Routes
+
+# Create payment
+POST {{baseUrl}}/payments/create
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "amount": 1000,
+  "lessonId": "lesson_id_here"
+}
+
+# Get payment status
+GET {{baseUrl}}/payments/status/payment_id_here
+Authorization: Bearer {{authToken}}
+
+### Chatbot Routes
+
+# Get chatbot response
+POST {{baseUrl}}/chatbot/chat
+Content-Type: application/json
+
+{
+  "message": "Tell me about the learning management system"
+}
+
