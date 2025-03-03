@@ -1,5 +1,6 @@
 import prisma from "../configs/database"
 import paypack from "../configs/paypack"
+import { PaymentStatus } from "@prisma/client"
 
 export async function createPayment(parentId: string, amount: number, lessonId: string) {
   const parent = await prisma.parent.findUnique({
@@ -7,21 +8,20 @@ export async function createPayment(parentId: string, amount: number, lessonId: 
     include: { user: true },
   })
 
-  if (!parent) {
-    throw new Error("Parent not found")
+  if (!parent || !parent.user.phoneNumber) {
+    throw new Error("Parent not found or phone number is missing")
   }
 
   try {
     const paymentResult = await paypack.cashin({
-      number: parent.user.phoneNumber, // Assuming we have a phoneNumber field in the User model
+      number: parent.user.phoneNumber,
       amount: amount,
-      environment: process.env.NODE_ENV === "production" ? "production" : "development",
     })
 
     const payment = await prisma.payment.create({
       data: {
         amount: amount,
-        status: "PENDING",
+        status: PaymentStatus.PENDING,
         parentId: parentId,
         lessonId: lessonId,
         paypackRef: paymentResult.data.ref,
@@ -49,12 +49,13 @@ export async function getPaymentStatus(paymentId: string) {
     const latestEvent = events.data.transactions[0]
 
     if (latestEvent && latestEvent.data.ref === payment.paypackRef) {
+      const newStatus = latestEvent.data.status.toUpperCase() as PaymentStatus
       await prisma.payment.update({
         where: { id: paymentId },
-        data: { status: latestEvent.data.status.toUpperCase() },
+        data: { status: newStatus },
       })
 
-      return latestEvent.data.status.toUpperCase()
+      return newStatus
     }
 
     return payment.status

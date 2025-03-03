@@ -2,11 +2,12 @@ import type { Request, Response, NextFunction } from "express"
 import jwt from "jsonwebtoken"
 import { JWT_SECRET } from "../configs/auth"
 
-export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   const token = req.header("Authorization")?.replace("Bearer ", "")
 
   if (!token) {
-    return res.status(401).json({ error: "Authentication required" })
+    res.status(401).json({ error: "Authentication required" })
+    return
   }
 
   try {
@@ -18,9 +19,10 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
   }
 }
 
-export const adminMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const adminMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   if ((req as any).user.role !== "ADMIN") {
-    return res.status(403).json({ error: "Admin access required" })
+    res.status(403).json({ error: "Admin access required" })
+    return
   }
   next()
 }

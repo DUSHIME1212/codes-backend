@@ -147,24 +147,24 @@ model Question {
   quizId  String
 }
 
-model Payment {
-  id         String        @id @default(uuid())
-  amount     Float
-  status     PaymentStatus
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
-  paypackRef String        @unique
-
-  parent   Parent @relation(fields: [parentId], references: [id])
-  parentId String
-  lesson   Lesson @relation(fields: [lessonId], references: [id])
-  lessonId String
-}
-
 enum PaymentStatus {
   PENDING
   COMPLETED
   FAILED
+}
+
+model Payment {
+  id         String   @id @default(uuid())
+  amount     Float
+  status     PaymentStatus
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  paypackRef String   @unique
+
+  parent     Parent   @relation(fields: [parentId], references: [id])
+  parentId   String
+  lesson     Lesson   @relation(fields: [lessonId], references: [id])
+  lessonId   String
 }
 
 model LessonRating {

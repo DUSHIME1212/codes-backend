@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from "express"
 import * as gameService from "../services/gameService"
 import { validateCreateGame, validateUpdateGame } from "../validators/gameValidator"
 
-export const getAllGames = async (req: Request, res: Response, next: NextFunction) => {
+export const getAllGames = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const games = await gameService.getAllGames()
     res.json(games)
@@ -11,12 +11,13 @@ export const getAllGames = async (req: Request, res: Response, next: NextFunctio
   }
 }
 
-export const getGameById = async (req: Request, res: Response, next: NextFunction) => {
+export const getGameById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params
     const game = await gameService.getGameById(id)
     if (!game) {
-      return res.status(404).json({ error: "Game not found" })
+      res.status(404).json({ error: "Game not found" })
+      return
     }
     res.json(game)
   } catch (error) {
@@ -24,7 +25,7 @@ export const getGameById = async (req: Request, res: Response, next: NextFunctio
   }
 }
 
-export const createGame = async (req: Request, res: Response, next: NextFunction) => {
+export const createGame = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const adminId = (req as any).user.id
     const validatedData = validateCreateGame(req.body)
@@ -35,7 +36,7 @@ export const createGame = async (req: Request, res: Response, next: NextFunction
   }
 }
 
-export const updateGame = async (req: Request, res: Response, next: NextFunction) => {
+export const updateGame = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params
     const validatedData = validateUpdateGame(req.body)
@@ -46,7 +47,7 @@ export const updateGame = async (req: Request, res: Response, next: NextFunction
   }
 }
 
-export const deleteGame = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteGame = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params
     await gameService.deleteGame(id)

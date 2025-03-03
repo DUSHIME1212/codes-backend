@@ -1,63 +1,59 @@
-import type { Request, Response } from "express"
+import type { Request, Response, NextFunction } from "express"
 import * as lessonService from "../services/lessonService"
 import { validateCreateLesson, validateUpdateLesson } from "../validators/lessonValidator"
 
-// Get all lessons
-export async function getAllLessons(req: Request, res: Response) {
+export const getAllLessons = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const lessons = await lessonService.getAllLessons()
     res.json(lessons)
   } catch (error) {
-    res.status(500).json({ error: (error as Error).message })
+    next(error)
   }
 }
 
-// Get a lesson by ID
-export async function getLessonById(req: Request, res: Response) {
+export const getLessonById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params
     const lesson = await lessonService.getLessonById(id)
     if (!lesson) {
-      return res.status(404).json({ error: "Lesson not found" })
+      res.status(404).json({ error: "Lesson not found" })
+      return
     }
     res.json(lesson)
   } catch (error) {
-    res.status(500).json({ error: (error as Error).message })
+    next(error)
   }
 }
 
-// Create a new lesson
-export async function createLesson(req: Request, res: Response) {
+export const createLesson = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const adminId = (req as any).user.id
     const validatedData = validateCreateLesson(req.body)
     const lesson = await lessonService.createLesson(adminId, validatedData)
     res.status(201).json(lesson)
   } catch (error) {
-    res.status(400).json({ error: (error as Error).message })
+    next(error)
   }
 }
 
-// Update a lesson
-export async function updateLesson(req: Request, res: Response) {
+export const updateLesson = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params
     const validatedData = validateUpdateLesson(req.body)
     const updatedLesson = await lessonService.updateLesson(id, validatedData)
     res.json(updatedLesson)
   } catch (error) {
-    res.status(400).json({ error: (error as Error).message })
+    next(error)
   }
 }
 
-// Delete a lesson
-export async function deleteLesson(req: Request, res: Response) {
+export const deleteLesson = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params
     await lessonService.deleteLesson(id)
     res.status(204).send()
   } catch (error) {
-    res.status(404).json({ error: (error as Error).message })
+    next(error)
   }
 }
 

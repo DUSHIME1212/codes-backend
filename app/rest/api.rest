@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:3000/api/v1
+@baseUrl = http://localhost:8000/api/v1
 @authToken = YOUR_AUTH_TOKEN_HERE
 
 ### User Routes
@@ -6,7 +6,6 @@
 # Register a new user
 POST {{baseUrl}}/users/register
 Content-Type: application/json
-
 {
   "email": "test@example.com",
   "password": "password123",

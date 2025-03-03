@@ -12,15 +12,14 @@ dotenv.config();
 const app = express();
 
 // Set up CORS
-const corsOptions = {
-  origin:
-    process.env.NODE_ENV === "production"
-      ? "https://codeempowementtech.vercel.app"
-      : "http://localhost:3000",
-  optionsSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
-
+// const corsOptions = {
+//   origin:
+//     process.env.NODE_ENV === "production"
+//       ? "https://codeempowementtech.vercel.app"
+//       : "http://localhost:3000",
+//   optionsSuccessStatus: 200,
+// };
+app.use(cors());
 prisma
   .$connect()
   .then(() => {
@@ -31,7 +30,9 @@ prisma
   });
 
 // Parse JSON bodies
+
 app.use(express.json());
+
 // Set up routes
 app.use("/api/v1", routes)
 // Use error handler
