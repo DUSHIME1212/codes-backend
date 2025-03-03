@@ -9,7 +9,8 @@ export const register = async (req: Request, res: Response, next: NextFunction):
       headers: req.headers,
     })
     console.log("Received body:", JSON.stringify(req.body))
-    const validatedData = validateRegister(req.body)
+const validatedData = validateRegister(req.body)
+
     const user = await userService.register(validatedData)
     res.status(201).json(user)
   } catch (error) {
@@ -48,4 +49,3 @@ export const updateProfile = async (req: Request, res: Response, next: NextFunct
     next(error)
   }
 }
-

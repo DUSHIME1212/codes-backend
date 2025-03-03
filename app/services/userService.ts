@@ -9,7 +9,13 @@ export async function register(userData: { email: string; password: string; role
   const { email, password, role } = userData
 
   // Check if user already exists
-  const existingUser = await prisma.user.findUnique({ where: { email } })
+if (!email) {
+  throw new Error("Email is required");
+}
+
+// Check if user already exists
+const existingUser = await prisma.user.findUnique({ where: { email } })
+
   if (existingUser) {
     throw new Error("User already exists")
   }
@@ -81,4 +87,3 @@ export async function updateProfile(userId: string, updateData: any) {
 
   return updatedUser
 }
-
