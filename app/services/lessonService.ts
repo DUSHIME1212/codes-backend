@@ -1,4 +1,4 @@
-import prisma from "../configs/database"
+import prisma from '../configs/database';
 
 // Get all lessons
 export async function getAllLessons() {
@@ -10,7 +10,7 @@ export async function getAllLessons() {
         },
       },
     },
-  })
+  });
 }
 
 // Get a lesson by ID
@@ -26,7 +26,7 @@ export async function getLessonById(lessonId: string) {
         },
       },
     },
-  })
+  });
 }
 
 // Create a new lesson
@@ -36,7 +36,7 @@ export async function createLesson(adminId: string, data: { title: string; descr
       ...data,
       adminId,
     },
-  })
+  });
 }
 
 // Update a lesson
@@ -47,14 +47,14 @@ export async function updateLesson(
   return prisma.lesson.update({
     where: { id: lessonId },
     data,
-  })
+  });
 }
 
 // Delete a lesson
 export async function deleteLesson(lessonId: string) {
   return prisma.lesson.delete({
     where: { id: lessonId },
-  })
+  });
 }
 
 // Add a challenge to a lesson
@@ -64,7 +64,7 @@ export async function addChallenge(lessonId: string, data: { title: string; desc
       ...data,
       lessonId,
     },
-  })
+  });
 }
 
 // Add a quiz to a lesson
@@ -83,7 +83,7 @@ export async function addQuiz(
     include: {
       questions: true,
     },
-  })
+  });
 }
 
 // Get lesson ratings
@@ -91,13 +91,13 @@ export async function getLessonRatings(lessonId: string) {
   return prisma.lessonRating.findMany({
     where: { lessonId },
     include: { parent: true },
-  })
+  });
 }
 
 // Get recently added lessons
 export async function getRecentlyAddedLessons(limit = 5) {
   return prisma.lesson.findMany({
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: 'desc' },
     take: limit,
     include: {
       ratings: {
@@ -106,7 +106,7 @@ export async function getRecentlyAddedLessons(limit = 5) {
         },
       },
     },
-  })
+  });
 }
 
 // Search lessons
@@ -114,8 +114,8 @@ export async function searchLessons(query: string) {
   return prisma.lesson.findMany({
     where: {
       OR: [
-        { title: { contains: query, mode: "insensitive" } },
-        { description: { contains: query, mode: "insensitive" } },
+        { title: { contains: query, mode: 'insensitive' } },
+        { description: { contains: query, mode: 'insensitive' } },
       ],
     },
     include: {
@@ -125,6 +125,5 @@ export async function searchLessons(query: string) {
         },
       },
     },
-  })
+  });
 }
-

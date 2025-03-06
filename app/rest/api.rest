@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:8000/api/v1 
-@authToken = YOUR_AUTH_TOKEN_HERE
+@authToken = 
 
 ### User Routes
 
@@ -23,11 +23,11 @@ Content-Type: application/json
 
 # Get user profile
 GET {{baseUrl}}/users/profile
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 
 # Update user profile
 PUT {{baseUrl}}/users/profile
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 Content-Type: application/json
 
 {
@@ -46,7 +46,7 @@ GET {{baseUrl}}/lessons/lesson_id_here
 
 # Create lesson (admin only)
 POST {{baseUrl}}/lessons
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 Content-Type: application/json
 
 {
@@ -57,7 +57,7 @@ Content-Type: application/json
 
 # Update lesson (admin only)
 PUT {{baseUrl}}/lessons/lesson_id_here
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 Content-Type: application/json
 
 {
@@ -67,7 +67,7 @@ Content-Type: application/json
 
 # Delete lesson (admin only)
 DELETE {{baseUrl}}/lessons/lesson_id_here
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 
 ### Game Routes
 
@@ -79,7 +79,7 @@ GET {{baseUrl}}/games/game_id_here
 
 # Create game (admin only)
 POST {{baseUrl}}/games
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 Content-Type: application/json
 
 {
@@ -90,7 +90,7 @@ Content-Type: application/json
 
 # Update game (admin only)
 PUT {{baseUrl}}/games/game_id_here
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 Content-Type: application/json
 
 {
@@ -100,7 +100,7 @@ Content-Type: application/json
 
 # Delete game (admin only)
 DELETE {{baseUrl}}/games/game_id_here
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 
 ### Group Routes
 
@@ -112,7 +112,7 @@ GET {{baseUrl}}/groups/group_id_here
 
 # Create group (admin only)
 POST {{baseUrl}}/groups
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 Content-Type: application/json
 
 {
@@ -122,7 +122,7 @@ Content-Type: application/json
 
 # Update group (admin only)
 PUT {{baseUrl}}/groups/group_id_here
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 Content-Type: application/json
 
 {
@@ -132,13 +132,13 @@ Content-Type: application/json
 
 # Delete group (admin only)
 DELETE {{baseUrl}}/groups/group_id_here
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 
 ### Payment Routes
 
 # Create payment
 POST {{baseUrl}}/payments/create
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 Content-Type: application/json
 
 {
@@ -148,7 +148,7 @@ Content-Type: application/json
 
 # Get payment status
 GET {{baseUrl}}/payments/status/payment_id_here
-Authorization: Bearer {{authToken}}
+Authorization: Bearer YOUR_AUTH_TOKEN_HERE
 
 ### Chatbot Routes
 
@@ -159,4 +159,3 @@ Content-Type: application/json
 {
   "message": "Tell me about the learning management system"
 }
-
