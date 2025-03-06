@@ -1,9 +1,9 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import { errorHandler } from "./middlewares/errorHandler";
-import prisma from "./configs/database";
-import routes from "./routes"
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { errorHandler } from './middlewares/errorHandler';
+import prisma from './configs/database';
+import routes from './routes';
 
 // Load environment variables
 dotenv.config();
@@ -23,10 +23,10 @@ app.use(cors());
 prisma
   .$connect()
   .then(() => {
-    console.log("Successfully connected to the database");
+    console.log('Successfully connected to the database');
   })
   .catch((error: any) => {
-    console.error("Failed to connect to the database:", error);
+    console.error('Failed to connect to the database:', error);
   });
 
 // Parse JSON bodies
@@ -34,7 +34,7 @@ prisma
 app.use(express.json());
 
 // Set up routes
-app.use("/api/v1", routes)
+app.use('/api/v1', routes);
 // Use error handler
 app.use(errorHandler);
 

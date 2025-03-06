@@ -1,4 +1,4 @@
-const PaypackJs = require("paypack-js").default;
+const PaypackJs = require('paypack-js').default;
 
 const paypack = new PaypackJs({
   client_id: process.env.PAYPACK_CLIENT_ID as string,
